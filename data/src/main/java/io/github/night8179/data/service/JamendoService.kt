@@ -19,7 +19,7 @@ class JamendoService {
             val response: TrackResponseDTO = KtorClient.netClient.get("https://api.jamendo.com/v3.0/tracks/"){
                 parameter("client_id", "1448099e")
                 parameter("format", "jsonpretty")
-                parameter("namesearch", query)
+                parameter("search", query)
             }.body()
             return response
         }

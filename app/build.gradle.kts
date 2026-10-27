@@ -36,12 +36,15 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":feature:home"))
     implementation(project(":feature:favorites"))
     implementation(project(":feature:trackcard"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)

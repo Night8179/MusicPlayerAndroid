@@ -6,5 +6,4 @@ import kotlinx.serialization.Serializable
 data class HeadersDTO(val status: String,
                       val code: Int,
                       var error_message: String,
-                      val result_count: String,
-                      val next: String)
+                      val results_count: Int)
