@@ -24,8 +24,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "MusicPlayer"
 include(":app")
-include(":domain")
-include(":data")
-include(":feature:home")
-include(":feature:favorites")
-include(":feature:trackcard")
+include(":core:network")
+include(":home:feature")
+include(":home:model")
+include(":favourite:feature")
+include(":favourite:model")
+include(":trackcard:feature")
+include(":trackcard:model")

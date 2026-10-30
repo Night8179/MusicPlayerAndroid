@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import io.github.night8179.data.repository.TrackRepositoryImpl
+import io.github.night8179.model.domain.model.Track
+import io.github.night8179.model.domain.repository.TrackRepository
 import io.github.night8179.musicplayer.ui.theme.MusicPlayerTheme
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +48,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun testButton(){
     val scope = rememberCoroutineScope()
-    val rep = TrackRepositoryImpl()
+    val rep: TrackRepository = koinInject()
     Button(onClick = {
         scope.launch {
-            println(rep.getTracks())
-            println(rep.searchTrack("Scream"))
+            val sm: List<Track> = rep.getTracks()
+            sm.forEach { it -> println(it) }
         }
     }) {
         Text("Json")
