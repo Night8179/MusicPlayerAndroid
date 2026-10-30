@@ -6,6 +6,7 @@ import io.github.night8179.model.domain.model.Track
 internal class TrackMapper {
     fun fromDTO(dto: TrackDTO): Track {
         return Track(
+            id = dto.id,
             name = dto.name,
             duration = run {
                 val hour = dto.duration / 3600

@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class TrackDTO(
+    val id: String,
     val name: String,
     val duration: Int,
     val artist_name: String,
