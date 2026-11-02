@@ -1,0 +1,21 @@
+package io.github.night8179.feature.screen
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+
+@Composable
+fun FavouriteScreen() {
+    Row() {
+        Column {
+            Text("FavouriteScreen")
+            Button(onClick = {
+
+            }) {
+                Text("Press")
+            }
+        }
+    }
+}
