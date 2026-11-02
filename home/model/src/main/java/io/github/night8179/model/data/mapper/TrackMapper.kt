@@ -4,7 +4,7 @@ import io.github.night8179.model.data.model.TrackDTO
 import io.github.night8179.model.domain.model.Track
 
 internal class TrackMapper {
-    fun fromDTO(dto: TrackDTO): Track {
+    fun toDomain(dto: TrackDTO): Track {
         return Track(
             id = dto.id,
             name = dto.name,

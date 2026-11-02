@@ -24,7 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import io.github.night8179.feature.screen.FavouriteScreen
-import io.github.night8179.feature.screen.HomeScreen
+import io.github.night8179.feature.screen.HomeRoute
 import io.github.night8179.feature.screen.TrackcardScreen
 
 @Composable
@@ -78,7 +78,7 @@ fun AppNavigation() {
             navController = navController,
             startDestination = Home, Modifier.padding(innerPadding)
         ) {
-            composable<Home> { HomeScreen(onOpenTrackCard = { navController.navigate(TrackCard) }) }
+            composable<Home> { HomeRoute(onOpenTrackCard = { navController.navigate(TrackCard) }) }
             composable<TrackCard> { TrackcardScreen() }
             composable<Favourite> { FavouriteScreen() }
         }

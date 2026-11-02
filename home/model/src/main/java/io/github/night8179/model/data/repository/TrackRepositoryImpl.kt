@@ -9,14 +9,14 @@ internal class TrackRepositoryImpl(private val service: JamendoService, private 
     override suspend fun getTracks(): List<Track> {
         val response = service.getTracks()
         val tracksDTO = response.results
-        val tracks: List<Track> = tracksDTO.map { dto -> mapper.fromDTO(dto) }
+        val tracks: List<Track> = tracksDTO.map { dto -> mapper.toDomain(dto) }
         return tracks
     }
 
     override suspend fun searchTrack(query: String): List<Track> {
         val response = service.searchTrack(query)
         val tracksDTO = response.results
-        val tracks: List<Track> = tracksDTO.map { dto -> mapper.fromDTO(dto) }
+        val tracks: List<Track> = tracksDTO.map { dto -> mapper.toDomain(dto) }
         return tracks
     }
 }
