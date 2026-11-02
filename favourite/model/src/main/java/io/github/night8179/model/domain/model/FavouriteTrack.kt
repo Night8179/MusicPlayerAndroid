@@ -6,5 +6,4 @@ class FavouriteTrack(
     val artist_name: String,
     val image: String,
     val duration: String
-) {
-}
+)
