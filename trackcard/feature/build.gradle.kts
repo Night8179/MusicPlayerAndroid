@@ -25,6 +25,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":trackcard:model"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

@@ -1,4 +1,4 @@
-package io.github.night8179.model.domain.repository
+package io.github.night8179.feature.player
 
 import io.github.night8179.model.domain.model.PlayerTrack
 
