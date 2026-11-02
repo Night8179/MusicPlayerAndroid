@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11">
-      <module name="MusicPlayer.trackcard" target="25" />
+    <bytecodeTargetLevel target="25">
+      <module name="MusicPlayer.data" target="25" />
+      <module name="MusicPlayer.feature.favorites" target="25" />
+      <module name="MusicPlayer.feature.home" target="25" />
+      <module name="MusicPlayer.feature.trackcard" target="25" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -36,12 +36,17 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:favorites"))
-    implementation(project(":feature:trackcard"))
+    implementation(project(":core:network"))
+    implementation(project(":home:feature"))
+    implementation(project(":home:model"))
+    implementation(project(":favourite:feature"))
+    implementation(project(":favourite:model"))
+    implementation(project(":trackcard:feature"))
+    implementation(project(":trackcard:model"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
@@ -60,4 +65,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.ktor.client.core)
 }
