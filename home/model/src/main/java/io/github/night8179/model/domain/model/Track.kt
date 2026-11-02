@@ -6,8 +6,4 @@ public class Track(
     val duration: String,
     val artist_name: String,
     val image: String
-) {
-    override fun toString(): String {
-        return "$name by $artist_name with duration: $duration"
-    }
-}
+)
