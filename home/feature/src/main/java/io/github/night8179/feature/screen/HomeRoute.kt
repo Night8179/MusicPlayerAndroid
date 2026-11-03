@@ -11,6 +11,7 @@ fun HomeRoute(onOpenTrackCard: () -> Unit) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     HomeScreen(
         state,
+        onOpenTrackCard,
         onQueryChange = { text -> viewModel.updateQuery(text) },
         onSearch = { viewModel.searchTrack(state.query) })
 }

@@ -2,7 +2,7 @@ package io.github.night8179.feature.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.night8179.feature.mapper.TrackUiMapper
+import io.github.night8179.feature.mapper.toUi
 import io.github.night8179.feature.model.TrackUi
 import io.github.night8179.feature.state.HomeContentState
 import io.github.night8179.feature.state.HomeUiState
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val rep: TrackRepository, private val mapper: TrackUiMapper) :
+class HomeViewModel(private val rep: TrackRepository) :
     ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -34,7 +34,7 @@ class HomeViewModel(private val rep: TrackRepository, private val mapper: TrackU
                     curr.copy(content = HomeContentState.Loading)
                 }
                 val tracks: List<Track> = rep.getTracks()
-                val tracksUi: List<TrackUi> = tracks.map { mapper.toUi(it) }
+                val tracksUi: List<TrackUi> = tracks.map { it.toUi() }
                 if (tracksUi.isNotEmpty()) {
                     _uiState.update { curr ->
                         curr.copy(content = HomeContentState.Content(tracksUi))
@@ -61,16 +61,19 @@ class HomeViewModel(private val rep: TrackRepository, private val mapper: TrackU
     }
 
     fun searchTrack(query: String) {
-        if(query.trim() == "")
+        val searchQuery = query.trim()
+        if (searchQuery.isEmpty()) {
             loadTracks()
+            return
+        }
         requestJob?.cancel()
         requestJob = viewModelScope.launch {
             try {
                 _uiState.update { curr ->
                     curr.copy(content = HomeContentState.Loading)
                 }
-                val tracks: List<Track> = rep.searchTrack(query)
-                val tracksUi: List<TrackUi> = tracks.map { mapper.toUi(it) }
+                val tracks: List<Track> = rep.searchTrack(searchQuery)
+                val tracksUi: List<TrackUi> = tracks.map { it.toUi() }
                 if (tracksUi.isNotEmpty()) {
                     _uiState.update { curr ->
                         curr.copy(content = HomeContentState.Content(tracksUi))
