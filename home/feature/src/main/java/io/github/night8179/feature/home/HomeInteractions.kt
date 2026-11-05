@@ -1,5 +1,5 @@
 package io.github.night8179.feature.home
 
-interface HomeInteractions {
+public interface HomeInteractions {
     fun onTrackClick()
 }

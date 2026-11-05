@@ -20,12 +20,11 @@ import io.github.night8179.feature.HomeScreenWrapper
 import io.github.night8179.feature.home.HomeEvent
 import io.github.night8179.feature.home.HomeViewModel
 import io.github.night8179.feature.ui.FavouriteScreen
-import io.github.night8179.feature.ui.HomeScreen
 import io.github.night8179.feature.ui.TrackcardScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MusicPlayerScaffold() {
+internal fun MusicPlayerScaffold() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     Scaffold(
@@ -89,22 +88,35 @@ fun MusicPlayerScaffold() {
             startDestination = Screen.Home,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<Screen.Home> {
-                val viewModel = koinViewModel<HomeViewModel>()
+            listOf(
+                Screen.Home,
+                Screen.TrackCard,
+                Screen.Favourite
+            ).forEach { screen ->
+                when (screen) {
+                    Screen.Home ->
+                        composable<Screen.Home> {
+                            val viewModel = koinViewModel<HomeViewModel>()
 
-                LaunchedEffect(viewModel) {
-                    viewModel.events.collect { event ->
-                        when (event) {
-                            HomeEvent.OpenTrackCard ->
-                                navController.navigate(Screen.TrackCard)
+                            LaunchedEffect(viewModel) {
+                                viewModel.events.collect { event ->
+                                    when (event) {
+                                        HomeEvent.OpenTrackCard ->
+                                            navController.navigate(Screen.TrackCard)
+                                    }
+                                }
+                            }
+
+                            HomeScreenWrapper()
                         }
-                    }
-                }
 
-                HomeScreenWrapper()
+                    Screen.TrackCard ->
+                        composable<Screen.TrackCard> { TrackcardScreen() }
+
+                    Screen.Favourite ->
+                        composable<Screen.Favourite> { FavouriteScreen() }
+                }
             }
-            composable<Screen.TrackCard> { TrackcardScreen() }
-            composable<Screen.Favourite> { FavouriteScreen() }
         }
     }
 }

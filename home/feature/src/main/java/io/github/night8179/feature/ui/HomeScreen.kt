@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import io.github.night8179.feature.home.HomeInteractions
 
 @Composable
-fun HomeScreen(interaction: HomeInteractions) {
+internal fun HomeScreen(interaction: HomeInteractions) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column {
             Text("HomeScreen")

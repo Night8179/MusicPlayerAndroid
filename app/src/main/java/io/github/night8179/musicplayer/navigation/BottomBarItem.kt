@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
-sealed class BottomBarItem(
+internal sealed class BottomBarItem(
     val label: String,
     val icon: ImageVector
 ) {

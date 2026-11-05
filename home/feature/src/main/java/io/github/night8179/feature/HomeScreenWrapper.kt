@@ -6,7 +6,7 @@ import io.github.night8179.feature.ui.HomeScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HomeScreenWrapper(){
+public fun HomeScreenWrapper() {
     val viewModel = koinViewModel<HomeViewModel>()
     HomeScreen(interaction = viewModel)
 }
