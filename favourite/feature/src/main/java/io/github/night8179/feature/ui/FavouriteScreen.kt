@@ -1,4 +1,4 @@
-package io.github.night8179.feature.screen
+package io.github.night8179.feature.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,12 +8,10 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun FavouriteScreen() {
-    Row() {
+    Row {
         Column {
             Text("FavouriteScreen")
-            Button(onClick = {
-
-            }) {
+            Button(onClick = { Unit }) {
                 Text("Press")
             }
         }

@@ -11,7 +11,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-val networkModule = module {
+public val networkModule = module {
     single {
         HttpClient(OkHttp) {
             install(ContentNegotiation) {

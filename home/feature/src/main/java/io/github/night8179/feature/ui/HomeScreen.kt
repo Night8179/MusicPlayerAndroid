@@ -1,4 +1,4 @@
-package io.github.night8179.feature.screen
+package io.github.night8179.feature.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,25 +20,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import io.github.night8179.feature.home.HomeInteractions
 import io.github.night8179.feature.state.HomeContentState
 import io.github.night8179.feature.state.HomeUiState
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     state: HomeUiState,
-    onTrackCardOpen: () -> Unit,
-    onQueryChange: (String) -> Unit,
-    onSearch: () -> Unit
+    interaction: HomeInteractions
 ) {
-    Column(Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = state.query,
-            onValueChange = onQueryChange,
-            label = { Text("Поиск треков") },
+            onValueChange = interaction::updateQuery,
+            label = { Text(text = "Поиск треков") },
             singleLine = true,
             trailingIcon = {
-                IconButton(onClick = onSearch) {
+                IconButton(onClick = { interaction.searchTrack(state.query) }) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Найти треки"
@@ -47,33 +46,35 @@ fun HomeScreen(
             }
         )
         Box(
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
             contentAlignment = Alignment.Center
         ) {
             when (val content = state.content) {
-                is HomeContentState.Content -> LazyColumn(Modifier.fillMaxSize()) {
+                is HomeContentState.Content -> LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(
                         items = content.tracks,
                         key = { track -> track.id }
                     ) { track ->
                         TrackRow(
                             track = track,
-                            onClick = onTrackCardOpen
+                            onClick = interaction::onTrackClick
                         )
                     }
                 }
 
                 is HomeContentState.Error -> Text(
-                    content.msg, style = MaterialTheme.typography.titleMedium,
+                    text = content.msg,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(24.dp)
                 )
 
                 HomeContentState.Loading -> CircularProgressIndicator()
                 HomeContentState.Empty -> Text(
-                    "Треки не найдены", style = MaterialTheme.typography.titleMedium,
+                    text = "Треки не найдены",
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(24.dp)
                 )

@@ -3,7 +3,7 @@ package io.github.night8179.feature.mapper
 import io.github.night8179.feature.model.TrackUi
 import io.github.night8179.model.domain.model.Track
 
-fun Track.toUi(): TrackUi {
+internal fun Track.toUi(): TrackUi {
     return TrackUi(
         id = this.id,
         title = this.name,

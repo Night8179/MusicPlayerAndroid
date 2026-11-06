@@ -1,4 +1,4 @@
-package io.github.night8179.feature.screen
+package io.github.night8179.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,23 +10,39 @@ import io.github.night8179.model.domain.model.Track
 import io.github.night8179.model.domain.repository.TrackRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val rep: TrackRepository) :
-    ViewModel() {
+public sealed interface HomeEvent {
+    data object OpenTrackCard : HomeEvent
+}
+
+public class HomeViewModel(private val rep: TrackRepository) : ViewModel(), HomeInteractions {
+    private val eventsChannel = Channel<HomeEvent>(Channel.BUFFERED)
+    val events = eventsChannel.receiveAsFlow()
+
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+
     private var requestJob: Job? = null
+
 
     init {
         loadTracks()
     }
 
-    fun loadTracks() {
+    override fun onTrackClick() {
+        viewModelScope.launch {
+            eventsChannel.send(HomeEvent.OpenTrackCard)
+        }
+    }
+
+    private fun loadTracks() {
         requestJob?.cancel()
         requestJob = viewModelScope.launch {
             try {
@@ -48,19 +64,19 @@ class HomeViewModel(private val rep: TrackRepository) :
                 throw err
             } catch (err: Exception) {
                 _uiState.update { curr ->
-                    curr.copy(content = HomeContentState.Error("Не удалось загрузить треки"))
+                    curr.copy(content = HomeContentState.Error("Не удалось загрузить треки. ${err.message}"))
                 }
             }
         }
     }
 
-    fun updateQuery(newQuery: String) {
+    override fun updateQuery(newQuery: String) {
         _uiState.update { curr ->
             curr.copy(query = newQuery)
         }
     }
 
-    fun searchTrack(query: String) {
+    override fun searchTrack(query: String) {
         val searchQuery = query.trim()
         if (searchQuery.isEmpty()) {
             loadTracks()
