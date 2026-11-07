@@ -52,7 +52,9 @@ internal fun Menu() {
         navController
     ) {
         navigator.attach(navController)
-        onDispose { navigator.detach(navController) }
+        onDispose {
+            navigator.detach(navController)
+        }
     }
 
     Scaffold(

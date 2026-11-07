@@ -13,14 +13,21 @@ import org.koin.dsl.module
 
 public val networkModule = module {
     single {
-        HttpClient(OkHttp) {
-            install(ContentNegotiation) {
-                json(Json {
+        HttpClient(
+            engineFactory = OkHttp
+        ) {
+            install(
+                plugin = ContentNegotiation
+            ) {
+                json(
+                    Json {
                     prettyPrint = true
                     ignoreUnknownKeys = true
                 })
             }
-            install(Logging) {
+            install(
+                plugin = Logging
+            ) {
                 logger = Logger.DEFAULT
                 level = LogLevel.HEADERS
             }
