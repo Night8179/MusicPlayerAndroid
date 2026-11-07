@@ -3,14 +3,14 @@ package io.github.night8179.musicplayer.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal sealed class Screen {
+internal sealed class Route {
 
     @Serializable
-    data object Home : Screen()
+    data object Home : Route()
 
     @Serializable
-    data object TrackCard : Screen()
+    data object TrackCard : Route()
 
     @Serializable
-    data object Favourite : Screen()
+    data object Favourite : Route()
 }

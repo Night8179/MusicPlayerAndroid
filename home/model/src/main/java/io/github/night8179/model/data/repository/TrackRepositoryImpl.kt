@@ -11,14 +11,18 @@ internal class TrackRepositoryImpl(
     override suspend fun getTracks(): List<Track> {
         val response = service.getTracks()
         val tracksDTO = response.results
-        val tracks: List<Track> = tracksDTO.map { it.toDomain() }
+        val tracks: List<Track> = tracksDTO.map {
+            it.toDomain()
+        }
         return tracks
     }
 
     override suspend fun searchTrack(query: String): List<Track> {
         val response = service.searchTrack(query)
         val tracksDTO = response.results
-        val tracks: List<Track> = tracksDTO.map { it.toDomain() }
+        val tracks: List<Track> = tracksDTO.map {
+            it.toDomain()
+        }
         return tracks
     }
 }

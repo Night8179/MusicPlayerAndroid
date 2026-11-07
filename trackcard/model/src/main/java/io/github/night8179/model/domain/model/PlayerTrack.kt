@@ -6,5 +6,4 @@ public class PlayerTrack(
     val artist_name: String,
     val duration: String,
     val image: String
-) {
-}
+)

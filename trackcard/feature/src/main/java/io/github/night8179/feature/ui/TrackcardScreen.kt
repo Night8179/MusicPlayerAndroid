@@ -10,9 +10,15 @@ import androidx.compose.runtime.Composable
 fun TrackcardScreen() {
     Row {
         Column {
-            Text("TrackcardScreen")
-            Button(onClick = { Unit }) {
-                Text("Press")
+            Text(
+                text = "TrackcardScreen"
+            )
+            Button(onClick = {
+                Unit
+            }) {
+                Text(
+                    text = "Press"
+                )
             }
         }
     }

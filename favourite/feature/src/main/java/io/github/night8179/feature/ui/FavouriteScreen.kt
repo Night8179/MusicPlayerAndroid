@@ -10,9 +10,15 @@ import androidx.compose.runtime.Composable
 fun FavouriteScreen() {
     Row {
         Column {
-            Text("FavouriteScreen")
-            Button(onClick = { Unit }) {
-                Text("Press")
+            Text(
+                text = "FavouriteScreen"
+            )
+            Button(onClick = {
+                Unit
+            }) {
+                Text(
+                    text = "Press"
+                )
             }
         }
     }

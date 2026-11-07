@@ -12,7 +12,7 @@ internal fun TrackDTO.toDomain(): Track {
             val min = (this.duration % 3600) / 60
             val sec = this.duration % 60
             val str: String
-            if(hour > 0)
+            if (hour > 0)
                 str = "%d:%02d:%02d".format(hour, min, sec)
             else
                 str = "%02d:%02d".format(min, sec)
