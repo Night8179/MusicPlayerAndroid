@@ -7,7 +7,9 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
-internal class JamendoServiceImpl(private val client: HttpClient) : JamendoService {
+internal class JamendoServiceImpl(
+    private val client: HttpClient
+) : JamendoService {
     override suspend fun getTracks(): TrackResponseDTO {
         val response: TrackResponseDTO =
             client.get("https://api.jamendo.com/v3.0/tracks/") {

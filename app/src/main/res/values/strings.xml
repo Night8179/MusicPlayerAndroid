@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
+    <string name="tab_home">Главная</string>
+    <string name="tab_random">Случайный трек</string>
+    <string name="tab_favourite">Избранное</string>
 </resources>

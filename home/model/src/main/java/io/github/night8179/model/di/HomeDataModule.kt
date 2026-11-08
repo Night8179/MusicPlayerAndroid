@@ -6,11 +6,15 @@ import io.github.night8179.model.domain.repository.TrackRepository
 import io.github.night8179.model.domain.service.JamendoService
 import org.koin.dsl.module
 
-val homeDataModule = module{
+public val homeDataModule = module {
     single<JamendoService> {
-        JamendoServiceImpl(get())
+        JamendoServiceImpl(
+            get()
+        )
     }
-    single<TrackRepository>{
-        TrackRepositoryImpl(get())
+    single<TrackRepository> {
+        TrackRepositoryImpl(
+            get()
+        )
     }
 }

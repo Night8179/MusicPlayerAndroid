@@ -1,6 +1,6 @@
 package io.github.night8179.model.domain.model
 
-class FavouriteTrack(
+public class FavouriteTrack(
     val id: String,
     val name: String,
     val artist_name: String,

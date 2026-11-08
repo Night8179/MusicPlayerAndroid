@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -72,4 +73,5 @@ dependencies {
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.ktor.client.core)
+    implementation(libs.androidx.material.icon)
 }

@@ -11,16 +11,23 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-val networkModule = module {
+public val networkModule = module {
     single {
-        HttpClient(OkHttp) {
-            install(ContentNegotiation) {
-                json(Json {
+        HttpClient(
+            engineFactory = OkHttp
+        ) {
+            install(
+                plugin = ContentNegotiation
+            ) {
+                json(
+                    Json {
                     prettyPrint = true
                     ignoreUnknownKeys = true
                 })
             }
-            install(Logging) {
+            install(
+                plugin = Logging
+            ) {
                 logger = Logger.DEFAULT
                 level = LogLevel.HEADERS
             }
