@@ -1,4 +1,4 @@
-package io.github.night8179.feature.home
+package io.github.night8179.feature
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,22 +10,16 @@ import io.github.night8179.model.domain.model.Track
 import io.github.night8179.model.domain.repository.TrackRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-public sealed interface HomeEvent {
-    data object OpenTrackCard : HomeEvent
-}
-
-public class HomeViewModel(private val rep: TrackRepository) : ViewModel(), HomeInteractions {
-    private val eventsChannel = Channel<HomeEvent>(Channel.BUFFERED)
-    val events = eventsChannel.receiveAsFlow()
-
+internal class HomeViewModel(
+    private val rep: TrackRepository,
+    private val navigator: HomeNavigator
+) : ViewModel(), HomeInteractions {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
@@ -37,9 +31,7 @@ public class HomeViewModel(private val rep: TrackRepository) : ViewModel(), Home
     }
 
     override fun onTrackClick() {
-        viewModelScope.launch {
-            eventsChannel.send(HomeEvent.OpenTrackCard)
-        }
+        navigator.openTrackCard()
     }
 
     private fun loadTracks() {
@@ -47,24 +39,32 @@ public class HomeViewModel(private val rep: TrackRepository) : ViewModel(), Home
         requestJob = viewModelScope.launch {
             try {
                 _uiState.update { curr ->
-                    curr.copy(content = HomeContentState.Loading)
+                    curr.copy(
+                        content = HomeContentState.Loading
+                    )
                 }
                 val tracks: List<Track> = rep.getTracks()
                 val tracksUi: List<TrackUi> = tracks.map { it.toUi() }
                 if (tracksUi.isNotEmpty()) {
                     _uiState.update { curr ->
-                        curr.copy(content = HomeContentState.Content(tracksUi))
+                        curr.copy(
+                            content = HomeContentState.Content(tracksUi)
+                        )
                     }
                 } else {
                     _uiState.update { curr ->
-                        curr.copy(content = HomeContentState.Empty)
+                        curr.copy(
+                            content = HomeContentState.Empty
+                        )
                     }
                 }
             } catch (err: CancellationException) {
                 throw err
             } catch (err: Exception) {
                 _uiState.update { curr ->
-                    curr.copy(content = HomeContentState.Error("Не удалось загрузить треки. ${err.message}"))
+                    curr.copy(
+                        content = HomeContentState.Error("Не удалось загрузить треки. ${err.message}")
+                    )
                 }
             }
         }
@@ -72,7 +72,9 @@ public class HomeViewModel(private val rep: TrackRepository) : ViewModel(), Home
 
     override fun updateQuery(newQuery: String) {
         _uiState.update { curr ->
-            curr.copy(query = newQuery)
+            curr.copy(
+                query = newQuery
+            )
         }
     }
 
@@ -86,24 +88,32 @@ public class HomeViewModel(private val rep: TrackRepository) : ViewModel(), Home
         requestJob = viewModelScope.launch {
             try {
                 _uiState.update { curr ->
-                    curr.copy(content = HomeContentState.Loading)
+                    curr.copy(
+                        content = HomeContentState.Loading
+                    )
                 }
                 val tracks: List<Track> = rep.searchTrack(searchQuery)
                 val tracksUi: List<TrackUi> = tracks.map { it.toUi() }
                 if (tracksUi.isNotEmpty()) {
                     _uiState.update { curr ->
-                        curr.copy(content = HomeContentState.Content(tracksUi))
+                        curr.copy(
+                            content = HomeContentState.Content(tracksUi)
+                        )
                     }
                 } else {
                     _uiState.update { curr ->
-                        curr.copy(content = HomeContentState.Empty)
+                        curr.copy(
+                            content = HomeContentState.Empty
+                        )
                     }
                 }
             } catch (err: CancellationException) {
                 throw err
             } catch (err: Exception) {
                 _uiState.update { curr ->
-                    curr.copy(content = HomeContentState.Error("Не удалось загрузить треки. ${err.message}"))
+                    curr.copy(
+                        content = HomeContentState.Error("Не удалось загрузить треки. ${err.message}")
+                    )
                 }
             }
         }

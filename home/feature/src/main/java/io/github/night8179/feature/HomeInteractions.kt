@@ -1,6 +1,6 @@
-package io.github.night8179.feature.home
+package io.github.night8179.feature
 
-public interface HomeInteractions {
+internal interface HomeInteractions {
     fun onTrackClick()
     fun updateQuery(newQuery: String)
     fun searchTrack(query: String)

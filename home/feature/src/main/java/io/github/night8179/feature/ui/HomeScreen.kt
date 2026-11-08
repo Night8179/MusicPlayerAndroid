@@ -20,7 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.github.night8179.feature.home.HomeInteractions
+import io.github.night8179.feature.HomeInteractions
 import io.github.night8179.feature.state.HomeContentState
 import io.github.night8179.feature.state.HomeUiState
 
@@ -29,15 +29,23 @@ internal fun HomeScreen(
     state: HomeUiState,
     interaction: HomeInteractions
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = state.query,
             onValueChange = interaction::updateQuery,
-            label = { Text(text = "Поиск треков") },
+            label = {
+                Text(
+                    text = "Поиск треков"
+                )
+            },
             singleLine = true,
             trailingIcon = {
-                IconButton(onClick = { interaction.searchTrack(state.query) }) {
+                IconButton(onClick = {
+                    interaction.searchTrack(state.query)
+                }) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Найти треки"
@@ -52,7 +60,9 @@ internal fun HomeScreen(
             contentAlignment = Alignment.Center
         ) {
             when (val content = state.content) {
-                is HomeContentState.Content -> LazyColumn(modifier = Modifier.fillMaxSize()) {
+                is HomeContentState.Content -> LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     items(
                         items = content.tracks,
                         key = { track -> track.id }
