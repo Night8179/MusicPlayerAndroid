@@ -8,7 +8,8 @@ public val homeFeatureModule = module {
     viewModel {
         HomeViewModel(
             rep = get(),
-            navigator = get()
+            navigator = get(),
+            playback = get()
         )
     }
 }

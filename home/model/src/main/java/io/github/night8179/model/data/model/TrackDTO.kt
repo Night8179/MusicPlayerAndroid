@@ -8,5 +8,6 @@ internal data class TrackDTO(
     val name: String,
     val duration: Int,
     val artist_name: String,
-    val image: String
+    val image: String,
+    val audio: String
 )

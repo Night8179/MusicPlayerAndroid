@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
     private val rep: TrackRepository,
-    private val navigator: HomeNavigator
+    private val navigator: HomeNavigator,
+    private val playback: HomePlayback
 ) : ViewModel(), HomeInteractions {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -30,8 +31,14 @@ internal class HomeViewModel(
         loadTracks()
     }
 
-    override fun onTrackClick() {
-        navigator.openTrackCard()
+    override fun onTrackClick(trackId: String) {
+        val content = _uiState.value.content
+        if(content !is HomeContentState.Content) return
+
+        val tracks = content.tracks
+        val index = tracks.indexOfFirst { track -> track.id == trackId }
+        if(index == -1) return
+        playback.selectTrack(tracks, index)
     }
 
     private fun loadTracks() {

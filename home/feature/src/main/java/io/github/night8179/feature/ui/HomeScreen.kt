@@ -65,11 +65,15 @@ internal fun HomeScreen(
                 ) {
                     items(
                         items = content.tracks,
-                        key = { track -> track.id }
+                        key = {
+                            track -> track.id
+                        }
                     ) { track ->
                         TrackRow(
                             track = track,
-                            onClick = interaction::onTrackClick
+                            onClick = {
+                                interaction.onTrackClick(track.id)
+                            }
                         )
                     }
                 }

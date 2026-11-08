@@ -23,24 +23,32 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import io.github.night8179.feature.HomeScreenWrapper
+import io.github.night8179.feature.player.PlaybackViewModel
 import io.github.night8179.feature.ui.FavouriteScreen
 import io.github.night8179.feature.ui.TrackcardScreen
+import io.github.night8179.musicplayer.PlaybackBridge
 import io.github.night8179.musicplayer.R
 import org.koin.compose.koinInject
 
 @Composable
-internal fun Menu() {
+internal fun Menu(
+     playbackViewModel: PlaybackViewModel
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     val navigator = koinInject<Navigator>()
+    val playbackBridge = koinInject<PlaybackBridge>()
     DisposableEffect(
         navigator,
-        navController
+        navController,
+        playbackBridge
     ) {
         navigator.attach(navController)
+        playbackBridge.attach(playbackViewModel)
         onDispose {
             navigator.detach(navController)
+            playbackBridge.detach(playbackViewModel)
         }
     }
 

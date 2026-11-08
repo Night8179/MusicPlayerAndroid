@@ -19,6 +19,7 @@ internal fun TrackDTO.toDomain(): Track {
             str
         },
         artist_name = this.artist_name,
-        image = this.image
+        image = this.image,
+        audioUrl = this.audio
     )
 }

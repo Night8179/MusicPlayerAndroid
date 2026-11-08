@@ -5,5 +5,6 @@ public class Track(
     val name: String,
     val duration: String,
     val artist_name: String,
-    val image: String
+    val image: String,
+    val audioUrl: String
 )

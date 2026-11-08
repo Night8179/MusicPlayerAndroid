@@ -79,7 +79,8 @@ private fun TrackRowPreview() {
                 title = "Name",
                 artist = "test",
                 imageUrl = "",
-                durationText = "3:30"
+                durationText = "3:30",
+                audioUrl = ""
             ),
             onClick = {}
         )
