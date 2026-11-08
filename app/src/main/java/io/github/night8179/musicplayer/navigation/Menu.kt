@@ -28,19 +28,6 @@ import io.github.night8179.feature.ui.TrackcardScreen
 import io.github.night8179.musicplayer.R
 import org.koin.compose.koinInject
 
-private val tabs = listOf(
-    NavTab(
-        route = Route.Home,
-        labelRes = R.string.tab_home,
-        icon = Icons.Default.Home
-    ),
-    NavTab(
-        route = Route.Favourite,
-        labelRes = R.string.tab_favourite,
-        icon = Icons.Default.Star
-    )
-)
-
 @Composable
 internal fun Menu() {
     val navController = rememberNavController()
@@ -56,6 +43,19 @@ internal fun Menu() {
             navigator.detach(navController)
         }
     }
+
+    val tabs = listOf(
+        NavTab(
+            route = Route.Home,
+            labelRes = stringResource(R.string.tab_home),
+            icon = Icons.Default.Home
+        ),
+        NavTab(
+            route = Route.Favourite,
+            labelRes = stringResource(R.string.tab_favourite),
+            icon = Icons.Default.Star
+        )
+    )
 
     Scaffold(
         bottomBar = {
@@ -90,7 +90,7 @@ internal fun Menu() {
                             },
                             text = {
                                 Text(
-                                    text = stringResource(tab.labelRes)
+                                    text = tab.labelRes
                                 )
                             },
                             icon = {

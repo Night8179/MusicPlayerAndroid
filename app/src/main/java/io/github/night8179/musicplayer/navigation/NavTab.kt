@@ -8,6 +8,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 internal data class NavTab(
     val route: Route,
-    val labelRes: Int,
+    val labelRes: String,
     val icon: ImageVector
 )
