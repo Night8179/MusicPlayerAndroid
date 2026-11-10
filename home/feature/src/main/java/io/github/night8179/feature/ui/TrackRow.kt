@@ -19,11 +19,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import io.github.night8179.feature.model.TrackUi
+import io.github.night8179.feature.model.TrackUiState
 
 @Composable
 internal fun TrackRow(
-    track: TrackUi,
+    track: TrackUiState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -74,7 +74,7 @@ internal fun TrackRow(
 private fun TrackRowPreview() {
     MaterialTheme {
         TrackRow(
-            track = TrackUi(
+            track = TrackUiState(
                 id = "preview",
                 title = "Name",
                 artist = "test",

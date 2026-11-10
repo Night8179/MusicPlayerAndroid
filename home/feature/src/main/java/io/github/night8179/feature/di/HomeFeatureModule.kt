@@ -7,7 +7,7 @@ import org.koin.dsl.module
 public val homeFeatureModule = module {
     viewModel {
         HomeViewModel(
-            rep = get(),
+            trackRepository = get(),
             navigator = get()
         )
     }

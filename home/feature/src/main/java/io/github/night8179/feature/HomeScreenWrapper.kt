@@ -10,8 +10,10 @@ import org.koin.compose.viewmodel.koinViewModel
 public fun HomeScreenWrapper() {
     val viewModel = koinViewModel<HomeViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+
     HomeScreen(
         state = state,
-        interaction = viewModel
+        interaction = viewModel,
+        searchFieldState = viewModel.searchFieldState
     )
 }

@@ -1,6 +1,14 @@
 package io.github.night8179.feature.state
 
-data class HomeUiState(
-    val query: String = "",
-    val content: HomeContentState = HomeContentState.Loading
-)
+import io.github.night8179.feature.mapper.HomeErrorReason
+import io.github.night8179.feature.model.TrackUiState
+
+sealed interface HomeUiState {
+    data class Content(
+        val tracks: List<TrackUiState>
+    ): HomeUiState
+    data class Error(
+        val reason: HomeErrorReason
+    ): HomeUiState
+    data object Loading: HomeUiState
+}
