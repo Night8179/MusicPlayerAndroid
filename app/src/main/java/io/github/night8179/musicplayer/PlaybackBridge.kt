@@ -1,7 +1,7 @@
 package io.github.night8179.musicplayer
 
 import io.github.night8179.feature.HomePlayback
-import io.github.night8179.feature.model.TrackUi
+import io.github.night8179.feature.model.TrackUiState
 import io.github.night8179.feature.player.PlaybackViewModel
 import io.github.night8179.musicplayer.mapper.toPlayer
 
@@ -19,7 +19,7 @@ class PlaybackBridge(): HomePlayback {
     }
 
     override fun selectTrack(
-        tracks: List<TrackUi>,
+        tracks: List<TrackUiState>,
         index: Int
     ) {
         if(playbackViewModel?.toggleIfCurr(trackId = tracks[index].id) == true)

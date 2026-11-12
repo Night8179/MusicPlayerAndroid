@@ -1,6 +1,6 @@
 package io.github.night8179.feature.model
 
-public data class TrackUi(
+public data class TrackUiState(
     val id: String,
     val title: String,
     val artist: String,

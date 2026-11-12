@@ -1,9 +1,9 @@
 package io.github.night8179.musicplayer.mapper
 
-import io.github.night8179.feature.model.TrackUi
+import io.github.night8179.feature.model.TrackUiState
 import io.github.night8179.model.domain.model.PlayerTrack
 
-internal fun TrackUi.toPlayer(): PlayerTrack {
+internal fun TrackUiState.toPlayer(): PlayerTrack {
     return PlayerTrack(
         id = this.id,
         name = this.title,
