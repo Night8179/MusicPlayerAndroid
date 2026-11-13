@@ -24,13 +24,13 @@ import io.github.night8179.feature.model.TrackUiState
 @Composable
 internal fun TrackRow(
     track: TrackUiState,
-    onClick: () -> Unit,
+    onPlaybackClick: () -> Unit,
+    onOpenTrackCard: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -42,30 +42,38 @@ internal fun TrackRow(
             modifier = Modifier
                 .size(64.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .clickable(onClick = onPlaybackClick)
         )
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
+        Row(
+            modifier = modifier
+                .weight(1f)
+                .clickable(onClick = onOpenTrackCard),
+        )
+        {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = track.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = track.artist,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
             Text(
-                text = track.title,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = track.artist,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyMedium,
+                text = track.durationText,
+                style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        Text(
-            text = track.durationText,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 
@@ -82,7 +90,12 @@ private fun TrackRowPreview() {
                 durationText = "3:30",
                 audioUrl = ""
             ),
-            onClick = {}
+            onPlaybackClick = {
+                Unit
+            },
+            onOpenTrackCard = {
+                Unit
+            }
         )
     }
 }

@@ -23,7 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import io.github.night8179.feature.HomeScreenWrapper
-import io.github.night8179.feature.player.PlaybackViewModel
+import io.github.night8179.feature.PlaybackViewModel
 import io.github.night8179.feature.ui.FavouriteScreen
 import io.github.night8179.feature.ui.TrackcardScreen
 import io.github.night8179.musicplayer.PlaybackBridge

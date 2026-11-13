@@ -57,6 +57,10 @@ internal class HomeViewModel(
         playback.selectTrack(tracks, index)
     }
 
+    override fun onTrackCardClick(trackId: String) {
+        navigator.openTrackCard()
+    }
+
     private fun scheduleSearch(
         query: String,
         delayMs: Long

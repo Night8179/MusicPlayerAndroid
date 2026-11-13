@@ -55,8 +55,11 @@ internal fun HomeScreen(
                     ) { track ->
                         TrackRow(
                             track = track,
-                            onClick = {
+                            onPlaybackClick = {
                                 interaction.onTrackClick(trackId = track.id)
+                            },
+                            onOpenTrackCard = {
+                                interaction.onTrackCardClick(trackId = track.id)
                             }
                         )
                     }

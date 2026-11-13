@@ -1,9 +1,12 @@
 package io.github.night8179.feature.player
 
+import android.net.Uri
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import io.github.night8179.model.domain.model.PlayerTrack
+import androidx.core.net.toUri
 
 internal class ExoPlayerController(
     private val player: ExoPlayer
@@ -16,14 +19,20 @@ internal class ExoPlayerController(
         if (tracks.isNotEmpty()) {
             if (index !in tracks.indices)
                 return
-            val list: List<MediaItem> = tracks.map { track ->
+            val mediaItemList: List<MediaItem> = tracks.map { track ->
+                val metadata = MediaMetadata.Builder()
+                    .setTitle(track.name)
+                    .setArtist(track.artist_name)
+                    .setArtworkUri(track.image.toUri())
+                    .build()
                 MediaItem.Builder()
                     .setMediaId(track.id)
                     .setUri(track.audioUrl)
+                    .setMediaMetadata(metadata)
                     .build()
             }
             player.setMediaItems(
-                 list,
+                 mediaItemList,
                 index,
                 0L
             )

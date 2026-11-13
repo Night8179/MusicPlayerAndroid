@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import io.github.night8179.feature.player.PlaybackViewModel
+import io.github.night8179.feature.PlaybackViewModel
 import io.github.night8179.musicplayer.navigation.Menu
 import io.github.night8179.musicplayer.ui.theme.MusicPlayerTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
