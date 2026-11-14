@@ -1,7 +1,7 @@
 package io.github.night8179.feature.mapper
 
-import io.github.night8179.feature.state.HomeUiState
-import io.github.night8179.model.domain.model.Track
+import io.github.night8179.feature.model.HomeUiState
+import io.github.night8179.model.domain.model.TrackState
 
 enum class HomeErrorReason {
     RequestFailed,
@@ -9,21 +9,20 @@ enum class HomeErrorReason {
 }
 
 fun mapHomeUiState(
-    result: Result<List<Track>>?,
+    tracksState: TrackState,
     isLoading: Boolean
 ): HomeUiState {
-    if (isLoading || result == null)
+    if (isLoading)
         return HomeUiState.Loading
 
-    return result.fold(
-        onSuccess = { tracks ->
-            if (tracks.isNotEmpty())
-                HomeUiState.Content(tracks.map { it.toUi() })
+    return when (tracksState) {
+        TrackState.Idle -> HomeUiState.Idle
+        TrackState.Failed -> HomeUiState.Error(HomeErrorReason.RequestFailed)
+        is TrackState.Loaded -> {
+            if (tracksState.tracks.isNotEmpty())
+                HomeUiState.Content(tracksState.tracks.map { track -> track.toUi() })
             else
                 HomeUiState.Error(HomeErrorReason.NoTracks)
-        },
-        onFailure = {
-            HomeUiState.Error(HomeErrorReason.RequestFailed)
         }
-    )
+    }
 }

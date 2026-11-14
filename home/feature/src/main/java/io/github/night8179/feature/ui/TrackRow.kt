@@ -19,18 +19,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import io.github.night8179.feature.HomeInteractions
 import io.github.night8179.feature.model.TrackUiState
 
 @Composable
 internal fun TrackRow(
     track: TrackUiState,
-    onClick: () -> Unit,
+    interaction: HomeInteractions,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(onClick = {
+                interaction.onTrackClick()
+            })
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -50,21 +53,16 @@ internal fun TrackRow(
             Text(
                 text = track.title,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleMedium
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = track.artist,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                overflow = TextOverflow.Ellipsis
             )
         }
         Text(
-            text = track.durationText,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            text = track.durationText
         )
     }
 }
@@ -81,7 +79,7 @@ private fun TrackRowPreview() {
                 imageUrl = "",
                 durationText = "3:30"
             ),
-            onClick = {}
+            interaction = HomeInteractions.mock()
         )
     }
 }
