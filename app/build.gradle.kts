@@ -54,11 +54,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.android)
-    implementation(libs.koin.compose)
-    implementation(libs.koin.compose.viewmodel)
-    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -73,5 +68,5 @@ dependencies {
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.ktor.client.core)
-    implementation(libs.androidx.material.icon)
+    implementation(libs.androidx.material.icons)
 }
