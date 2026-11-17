@@ -17,31 +17,27 @@ internal class TrackRepositoryImpl(
     override val tracksState = _tracksState.asStateFlow()
 
     override suspend fun getTracks() {
-        try{
+        try {
             val response = service.getTracks()
             val tracksDTO = response.results
             val tracks: List<Track> = tracksDTO.map { it.toDomain() }
             _tracksState.value = TrackState.Loaded(tracks)
-        }
-        catch(err: CancellationException){
+        } catch (err: CancellationException) {
             throw err
-        }
-        catch(err: Exception){
+        } catch (err: Exception) {
             _tracksState.value = TrackState.Failed
         }
     }
 
     override suspend fun searchTrack(query: String) {
-        try{
+        try {
             val response = service.searchTrack(query)
             val tracksDTO = response.results
             val tracks: List<Track> = tracksDTO.map { it.toDomain() }
             _tracksState.value = TrackState.Loaded(tracks)
-        }
-        catch(err: CancellationException){
+        } catch (err: CancellationException) {
             throw err
-        }
-        catch(err: Exception){
+        } catch (err: Exception) {
             _tracksState.value = TrackState.Failed
         }
     }

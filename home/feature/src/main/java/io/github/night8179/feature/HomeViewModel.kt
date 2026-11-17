@@ -45,13 +45,13 @@ internal class HomeViewModel(
 
     override fun onTrackClick(trackId: String) {
         val content = uiState.value
-        if(content !is HomeUiState.Content) return
+        if (content !is HomeUiState.Content) return
 
         val tracks = content.tracks
-        val index = tracks.indexOfFirst { track->
+        val index = tracks.indexOfFirst { track ->
             track.id == trackId
         }
-        if(index == -1) return
+        if (index == -1) return
         playback.selectTrack(tracks, index)
     }
 
