@@ -5,20 +5,16 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.night8179.feature.mapper.mapHomeUiState
-import io.github.night8179.feature.mapper.toUi
-import io.github.night8179.feature.model.TrackUiState
-import io.github.night8179.feature.state.HomeUiState
-import io.github.night8179.model.domain.model.Track
+import io.github.night8179.feature.model.HomeUiState
 import io.github.night8179.model.domain.repository.TrackRepository
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
@@ -26,34 +22,36 @@ internal class HomeViewModel(
     private val navigator: HomeNavigator,
     private val playback: HomePlayback
 ) : ViewModel(), HomeInteractions {
-    private val trackResult = MutableStateFlow<Result<List<Track>>?>(null)
-
     private val isLoading = MutableStateFlow(false)
 
-    val uiState = combine(trackResult, isLoading) { result, loading ->
-        mapHomeUiState(result, loading)
+    val uiState = combine(
+        trackRepository.tracksState,
+        isLoading
+    ) { tracksState, loading ->
+        mapHomeUiState(tracksState, loading)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
-        initialValue = HomeUiState.Loading
+        initialValue = HomeUiState.Idle
     )
     private var requestJob: Job? = null
 
     val searchFieldState = TextFieldState()
 
     init {
+        loadTracks()
         observeSearchField()
     }
 
     override fun onTrackClick(trackId: String) {
         val content = uiState.value
-        if(content !is HomeUiState.Content) return
+        if (content !is HomeUiState.Content) return
 
         val tracks = content.tracks
-        val index = tracks.indexOfFirst { track->
+        val index = tracks.indexOfFirst { track ->
             track.id == trackId
         }
-        if(index == -1) return
+        if (index == -1) return
         playback.selectTrack(tracks, index)
     }
 
@@ -64,56 +62,53 @@ internal class HomeViewModel(
     private fun scheduleSearch(
         query: String,
         delayMs: Long
-    ){
+    ) {
         val searchQuery = query.trim()
-        if (searchQuery.isEmpty()) {
-            loadTracks()
-            return
-        }
         requestJob?.cancel()
         requestJob = viewModelScope.launch {
             try {
+                isLoading.value = false
                 delay(delayMs)
                 isLoading.value = true
-                val tracks: List<Track> = trackRepository.searchTrack(searchQuery)
-                trackResult.value = Result.success(tracks)
-            } catch (err: CancellationException) {
-                throw err
-            } catch (err: Exception) {
-                trackResult.value = Result.failure(err)
+                trackRepository.searchTrack(searchQuery)
+            } finally {
+                if (isActive)
+                    isLoading.value = false
             }
-            isLoading.value = false
         }
     }
 
-    fun observeSearchField(){
-            viewModelScope.launch {
+    fun observeSearchField() {
+        viewModelScope.launch {
             snapshotFlow {
-                val query = searchFieldState.text.toString().trim()
-                if(query.length > 0) query else ""
-            }.collect { query ->
-                scheduleSearch(query, 350)
+                searchFieldState.text.toString().trim()
             }
+                .drop(1)
+                .collect { query ->
+                    if (query.isEmpty()) {
+                        requestJob?.cancel()
+                        isLoading.value = false
+                    } else {
+                        scheduleSearch(query, delayMs = 350)
+                    }
+                }
         }
     }
 
     private fun loadTracks() {
         requestJob?.cancel()
         requestJob = viewModelScope.launch {
+            isLoading.value = true
             try {
-                isLoading.value = true
-                val tracks: List<Track> = trackRepository.getTracks()
-                trackResult.value = Result.success(tracks)
-            } catch (err: CancellationException) {
-                throw err
-            } catch (err: Exception) {
-                trackResult.value = Result.failure(err)
+                trackRepository.getTracks()
+            } finally {
+                if (isActive)
+                    isLoading.value = false
             }
-            isLoading.value = false
         }
     }
 
     override fun searchTrack(query: String) {
-       scheduleSearch(query, 0)
+        scheduleSearch(query, 0)
     }
 }

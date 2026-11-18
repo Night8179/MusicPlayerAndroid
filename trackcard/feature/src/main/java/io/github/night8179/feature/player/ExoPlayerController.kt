@@ -32,7 +32,7 @@ internal class ExoPlayerController(
                     .build()
             }
             player.setMediaItems(
-                 mediaItemList,
+                mediaItemList,
                 index,
                 0L
             )
@@ -46,15 +46,14 @@ internal class ExoPlayerController(
     }
 
     override fun toggleIfCurr(trackId: String): Boolean {
-        if(player.playbackState == Player.STATE_ENDED)
+        if (player.playbackState == Player.STATE_ENDED)
             return false
 
         if (player.currentMediaItem?.mediaId == trackId) {
-            if(player.playWhenReady){
+            if (player.playWhenReady) {
                 pause()
                 return true
-            }
-            else{
+            } else {
                 resume()
                 return true
             }

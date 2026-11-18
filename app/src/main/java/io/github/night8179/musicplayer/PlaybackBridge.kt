@@ -5,7 +5,7 @@ import io.github.night8179.feature.model.TrackUiState
 import io.github.night8179.feature.PlaybackViewModel
 import io.github.night8179.musicplayer.mapper.toPlayer
 
-class PlaybackBridge(): HomePlayback {
+class PlaybackBridge() : HomePlayback {
     private var playbackViewModel: PlaybackViewModel? = null
 
     fun attach(playback: PlaybackViewModel) {
@@ -22,9 +22,12 @@ class PlaybackBridge(): HomePlayback {
         tracks: List<TrackUiState>,
         index: Int
     ) {
-        if(playbackViewModel?.toggleIfCurr(trackId = tracks[index].id) == true)
-            return
+        val playback = playbackViewModel ?: return
+        val selectedTrack = tracks.getOrNull(index)?.id ?: return
+
+        if (playback.toggleIfCurr(trackId = selectedTrack)) return
+
         val playerTrack = tracks.map { it.toPlayer() }
-        playbackViewModel?.startTrack(tracks = playerTrack, index = index)
+        playback.startTrack(tracks = playerTrack, index = index)
     }
 }

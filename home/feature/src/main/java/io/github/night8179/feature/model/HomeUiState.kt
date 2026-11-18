@@ -1,14 +1,16 @@
-package io.github.night8179.feature.state
+package io.github.night8179.feature.model
 
 import io.github.night8179.feature.mapper.HomeErrorReason
-import io.github.night8179.feature.model.TrackUiState
 
 sealed interface HomeUiState {
     data class Content(
         val tracks: List<TrackUiState>
-    ): HomeUiState
+    ) : HomeUiState
+
     data class Error(
         val reason: HomeErrorReason
-    ): HomeUiState
-    data object Loading: HomeUiState
+    ) : HomeUiState
+
+    data object Loading : HomeUiState
+    data object Idle : HomeUiState
 }

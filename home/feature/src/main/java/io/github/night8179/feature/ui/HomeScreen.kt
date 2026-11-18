@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.night8179.feature.HomeInteractions
 import io.github.night8179.feature.mapper.HomeErrorReason
-import io.github.night8179.feature.state.HomeUiState
+import io.github.night8179.feature.model.HomeUiState
 
 @Composable
 internal fun HomeScreen(
@@ -55,12 +55,7 @@ internal fun HomeScreen(
                     ) { track ->
                         TrackRow(
                             track = track,
-                            onPlaybackClick = {
-                                interaction.onTrackClick(trackId = track.id)
-                            },
-                            onOpenTrackCard = {
-                                interaction.onTrackCardClick(trackId = track.id)
-                            }
+                            interaction = interaction
                         )
                     }
                 }
@@ -75,6 +70,8 @@ internal fun HomeScreen(
                     modifier = Modifier.padding(24.dp)
                 )
 
+                HomeUiState.Idle -> Unit
+
                 HomeUiState.Loading -> CircularProgressIndicator()
             }
         }
@@ -83,7 +80,7 @@ internal fun HomeScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun previewHomeScreen(){
+private fun previewHomeScreen() {
     HomeScreen(
         state = HomeUiState.Loading,
         interaction = HomeInteractions.mock(),

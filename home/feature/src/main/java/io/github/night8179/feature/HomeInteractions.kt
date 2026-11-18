@@ -7,15 +7,9 @@ internal interface HomeInteractions {
 
     companion object {
         fun mock(): HomeInteractions = object : HomeInteractions {
-            override fun onTrackClick(trackId: String) {
-                Unit
-            }
-            override fun onTrackCardClick(trackId: String) {
-                Unit
-            }
-            override fun searchTrack(query: String) {
-                Unit
-            }
+            override fun onTrackClick(trackId: String) = Unit
+            override fun onTrackCardClick(trackId: String) = Unit
+            override fun searchTrack(query: String) = Unit
         }
     }
 }

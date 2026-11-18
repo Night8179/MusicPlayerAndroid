@@ -19,13 +19,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import io.github.night8179.feature.HomeInteractions
 import io.github.night8179.feature.model.TrackUiState
 
 @Composable
 internal fun TrackRow(
     track: TrackUiState,
-    onPlaybackClick: () -> Unit,
-    onOpenTrackCard: () -> Unit,
+    interaction: HomeInteractions,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -42,14 +42,17 @@ internal fun TrackRow(
             modifier = Modifier
                 .size(64.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .clickable(onClick = onPlaybackClick)
+                .clickable(onClick = {
+                    interaction.onTrackClick(track.id)
+                })
         )
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .weight(1f)
-                .clickable(onClick = onOpenTrackCard),
-        )
-        {
+                .clickable(onClick = {
+                    interaction.onTrackCardClick(trackId = track.id)
+                })
+        ) {
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -57,21 +60,16 @@ internal fun TrackRow(
                 Text(
                     text = track.title,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleMedium
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = track.artist,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    overflow = TextOverflow.Ellipsis
                 )
             }
             Text(
-                text = track.durationText,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = track.durationText
             )
         }
     }
@@ -90,12 +88,7 @@ private fun TrackRowPreview() {
                 durationText = "3:30",
                 audioUrl = ""
             ),
-            onPlaybackClick = {
-                Unit
-            },
-            onOpenTrackCard = {
-                Unit
-            }
+            interaction = HomeInteractions.mock()
         )
     }
 }
