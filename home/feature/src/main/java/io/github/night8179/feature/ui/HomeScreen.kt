@@ -15,12 +15,14 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.night8179.feature.HomeInteractions
 import io.github.night8179.feature.mapper.HomeErrorReason
 import io.github.night8179.feature.model.HomeUiState
+import io.github.night8179.home.feature.R
 
 @Composable
 internal fun HomeScreen(
@@ -62,8 +64,8 @@ internal fun HomeScreen(
 
                 is HomeUiState.Error -> Text(
                     text = when (state.reason) {
-                        HomeErrorReason.NoTracks -> "Треки не найдены"
-                        HomeErrorReason.RequestFailed -> "Не удалось загрузить треки"
+                        HomeErrorReason.NoTracks -> stringResource(R.string.home_no_tracks)
+                        HomeErrorReason.RequestFailed -> stringResource(R.string.home_load_error)
                     },
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
