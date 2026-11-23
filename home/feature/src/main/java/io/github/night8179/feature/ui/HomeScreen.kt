@@ -43,8 +43,7 @@ internal fun HomeScreen(
         )
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             when (state) {

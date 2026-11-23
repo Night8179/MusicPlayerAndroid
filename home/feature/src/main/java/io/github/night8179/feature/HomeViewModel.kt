@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -78,17 +77,19 @@ internal class HomeViewModel(
         requestJob = viewModelScope.launch {
             isLoading.value = true
             requestError.value = null
-            try {
+            runCatching {
                 fetch()
-            } catch (err: CancellationException) {
-                throw err
-            } catch (err: Exception) {
-                requestError.value = HomeErrorReason.RequestFailed
-            } finally {
-                if (isActive) {
+            }.fold(
+                onSuccess = {
+                    isLoading.value = false
+                },
+                onFailure = { err ->
+                    if (err is CancellationException) throw err
+
+                    requestError.value = HomeErrorReason.RequestFailed
                     isLoading.value = false
                 }
-            }
+            )
         }
     }
 
