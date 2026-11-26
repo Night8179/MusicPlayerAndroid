@@ -24,8 +24,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import io.github.night8179.feature.HomeScreenWrapper
 import io.github.night8179.feature.PlaybackViewModel
+import io.github.night8179.feature.TrackCardWrapper
 import io.github.night8179.feature.ui.FavouriteScreen
-import io.github.night8179.feature.ui.TrackcardScreen
 import io.github.night8179.musicplayer.PlaybackBridge
 import io.github.night8179.musicplayer.R
 import org.koin.compose.koinInject
@@ -131,7 +131,7 @@ internal fun Menu(
 
                     Route.TrackCard ->
                         composable<Route.TrackCard> {
-                            TrackcardScreen()
+                            TrackCardWrapper(playbackViewModel)
                         }
 
                     Route.Favourite ->

@@ -30,4 +30,18 @@ class PlaybackBridge() : HomePlayback {
         val playerTrack = tracks.map { it.toPlayer() }
         playback.startTrack(tracks = playerTrack, index = index)
     }
+
+    override fun selectTrackForDetails(
+        tracks: List<TrackUiState>,
+        index: Int
+    ) {
+        val playback = playbackViewModel ?: return
+        val selectedTrack = tracks.getOrNull(index) ?: return
+
+        if (selectedTrack.id == playback.playbackState.value.trackId)
+            return
+
+        val playerTrack = tracks.map { it.toPlayer() }
+        playback.startTrack(tracks = playerTrack, index = index)
+    }
 }

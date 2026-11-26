@@ -62,6 +62,16 @@ internal class HomeViewModel(
     }
 
     override fun onTrackCardClick(trackId: String) {
+        val content = uiState.value
+        if (content !is HomeUiState.Content) return
+
+        val tracks = content.tracks
+        val index = tracks.indexOfFirst { track ->
+            track.id == trackId
+        }
+        if (index == -1) return
+
+        playback.selectTrackForDetails(tracks, index)
         navigator.openTrackCard()
     }
 
