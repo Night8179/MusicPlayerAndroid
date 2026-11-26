@@ -31,9 +31,6 @@ internal fun TrackRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = {
-                interaction.onTrackClick()
-            })
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -45,25 +42,36 @@ internal fun TrackRow(
             modifier = Modifier
                 .size(64.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .clickable(onClick = {
+                    interaction.onTrackClick(track.id)
+                })
         )
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .clickable(onClick = {
+                    interaction.onTrackCardClick(trackId = track.id)
+                })
         ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = track.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = track.artist,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
             Text(
-                text = track.title,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = track.artist,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                text = track.durationText
             )
         }
-        Text(
-            text = track.durationText
-        )
     }
 }
 
@@ -77,7 +85,8 @@ private fun TrackRowPreview() {
                 title = "Name",
                 artist = "test",
                 imageUrl = "",
-                durationText = "3:30"
+                durationText = "3:30",
+                audioUrl = ""
             ),
             interaction = HomeInteractions.mock()
         )

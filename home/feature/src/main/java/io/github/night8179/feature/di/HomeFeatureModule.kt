@@ -10,6 +10,7 @@ public val homeFeatureModule = module {
         HomeViewModel(
             trackRepository = get(),
             navigator = get(),
+            playback = get(),
             uiStateMapper = get()
         )
     }

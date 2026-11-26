@@ -22,6 +22,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class HomeViewModel(
     private val trackRepository: TrackRepository,
     private val navigator: HomeNavigator,
+    private val playback: HomePlayback,
     private val uiStateMapper: HomeUiStateMapper
 ) : ViewModel(), HomeInteractions {
     private val isLoading = MutableStateFlow(false)
@@ -48,7 +49,29 @@ internal class HomeViewModel(
         observeSearchField()
     }
 
-    override fun onTrackClick() {
+    override fun onTrackClick(trackId: String) {
+        val content = uiState.value
+        if (content !is HomeUiState.Content) return
+
+        val tracks = content.tracks
+        val index = tracks.indexOfFirst { track ->
+            track.id == trackId
+        }
+        if (index == -1) return
+        playback.selectTrack(tracks, index)
+    }
+
+    override fun onTrackCardClick(trackId: String) {
+        val content = uiState.value
+        if (content !is HomeUiState.Content) return
+
+        val tracks = content.tracks
+        val index = tracks.indexOfFirst { track ->
+            track.id == trackId
+        }
+        if (index == -1) return
+
+        playback.selectTrackForDetails(tracks, index)
         navigator.openTrackCard()
     }
 

@@ -1,9 +1,10 @@
 package io.github.night8179.feature.model
 
-data class TrackUiState(
+public data class TrackUiState(
     val id: String,
     val title: String,
     val artist: String,
     val imageUrl: String,
-    val durationText: String
+    val durationText: String,
+    val audioUrl: String
 )

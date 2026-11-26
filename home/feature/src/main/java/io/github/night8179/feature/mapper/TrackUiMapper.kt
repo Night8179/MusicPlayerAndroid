@@ -9,6 +9,7 @@ internal fun Track.toUi(): TrackUiState {
         title = this.name,
         artist = this.artist_name,
         durationText = this.duration,
-        imageUrl = this.image
+        imageUrl = this.image,
+        audioUrl = this.audioUrl
     )
 }

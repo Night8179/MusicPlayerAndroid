@@ -5,5 +5,6 @@ public class PlayerTrack(
     val name: String,
     val artist_name: String,
     val duration: String,
-    val image: String
+    val image: String,
+    val audioUrl: String
 )

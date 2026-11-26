@@ -1,0 +1,7 @@
+<resources>
+    <string name="trackcard_playback_error">Не удалось воспроизвести трек. Проверьте подключение и повторите попытку.</string>
+    <string name="trackcard_resume">Воспроизвести</string>
+    <string name="trackcard_pause">Пауза</string>
+    <string name="trackcard_next_track">Следующий трек</string>
+    <string name="trackcard_previous_track">Предыдущий трек</string>
+</resources>
